@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        .speak{
+            width: 70%;
+        }
+    </style>
+</head>
+<body>
+    <main>
+    <input class="speak" type="text" name="" id="inp">
+    <button id="btn">Speak</button>
+</main>
+<script>
+    var btn=document.getElementById('btn')
+    btn.onclick=()=>{
+        var inp=document.getElementById('inp').value.toString()
+        const uttarance=new SpeechSynthesisUtterance(inp)
+        window.speechSynthesis.speak(uttarance)
+    }
+</script>
+</body>
+</html>
