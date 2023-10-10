@@ -1,0 +1,16 @@
+  <section class="section-center">
+    <!-- form -->
+    <form class="todo-form">
+      <p class="alert"></p>
+      <h3>Todo List</h3>
+      <div class="form-control">
+        <input type="text" id="todo" placeholder="e.g. Clean Room" />
+        <button type="submit" class="submit-btn">submit</button>
+      </div>
+    </form>
+    <!-- list -->
+    <div class="todo-container">
+      <div class="todo-list"></div>
+      <button class="clear-btn">clear items</button>
+    </div>
+  </section>
