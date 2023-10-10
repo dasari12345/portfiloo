@@ -1,0 +1,163 @@
+// ********** SELECT ITEMS **********
+const form=document.querySelector(".todo-form");
+const alert=document.querySelector(".alert");
+const todo=document.querySelector("#todo");
+const submitBtn=document.querySelector(".submit-btn");
+const container=document.querySelector(".todo-container");
+const list=document.querySelector(".todo-list");
+const clearBtn=document.querySelector('.clear-btn');
+// ********** Edit ITEMS **********
+let editElement;
+let editId="";
+let editFlag=false;
+// ********** EVENT LISTENERS **********
+form.addEventListener("submit",addItem);
+clearBtn.addEventListener("click",clearItems);
+// ********** FUNCTIONS **********
+function addItem(e){
+    e.preventDefault();//to stop to refresh the page
+    const value=todo.value;//collecting the value 
+    if (value!="" && !editFlag){
+        const id=new Date().getTime().toString();
+        const element=document.createElement("article");
+        let attr=document.createAttribute("data-id");
+        attr.value=id;
+        element.setAttributeNode(attr);
+        element.classList.add("todo-item");
+        element.innerHTML=`<p class="title">${value}</p>
+        <div class="btn-container">
+          <button type="button" class="edit-btn">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button type="button" class="delete-btn">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        `;
+        // adding event listeners to edit and delete buttons
+        const deleteBtn=element.querySelector(".delete-btn");
+        deleteBtn.addEventListener("click",deleteItem);
+        const editBtn=element.querySelector(".edit-btn");
+        editBtn.addEventListener("click",editItem);
+        // adding task to the list 
+        list.appendChild(element);
+        // adding to localStorage
+        addToLocalStorage(id,value);
+        container.classList.add("show-container");
+        displayAlert("Item added to list","success"); 
+    }
+    else if (value!="" && editFlag){
+      editElement.innerHTML=value;
+      displayAlert("Value Changed","success");
+      editLocalStorage(editId,value);
+    }
+    else{
+      displayAlert("Please enter a value","danger")
+    }
+    setBackToDefault();
+}
+function displayAlert(message, classname){
+  alert.textContent=message;
+  alert.classList.add(`alert-${classname}`);
+  setTimeout(()=>{
+    alert.textContent="";
+    alert.classList.remove(`alert-${classname}`);
+  },1000);
+}
+function deleteItem(e){
+    const element=e.currentTarget.parentElement.parentElement;
+    const id=element.dataset.id;
+    list.removeChild(element);
+    displayAlert("Item Deleted","danger");
+    if(list.children.length===0) container.classList.remove("show-container");
+    removeFromLocalStorage(id);
+}
+function editItem(e){
+    const element=e.currentTarget.parentElement.parentElement;
+    editId=element.dataset.id;
+    editElement=e.currentTarget.parentElement.previousElementSibling;
+    todo.value=editElement.innerHTML;
+    editFlag=true;
+    submitBtn.textContent="Edit";
+}
+function setBackToDefault(){
+  todo.value="";
+  submitBtn.textContent="Submit";
+  editId="";
+  editFlag=false;
+}
+function clearItems(){
+  const items=document.querySelectorAll(".todo-item");
+  if (items.length>0){
+    items.forEach((item)=>{
+      list.removeChild(item);
+    });
+    localStorage.removeItem("list");
+    container.classList.remove("show-container");
+    displayAlert("Items Cleared","danger");
+  }
+}
+// ********** LOCAL STORAGE **********
+function addToLocalStorage(id,value){
+  const todo ={id,value};
+  let items=getLocalStorage();
+  items.push(todo);
+  localStorage.setItem("list",JSON.stringify(items));
+}
+function getLocalStorage(id,value){
+  return localStorage.getItem("list") ? JSON.parse(localStorage.getItem("list")):[];
+}
+function editLocalStorage(id,value){
+  let items=getLocalStorage();
+  items=items.map((item)=>{
+    if(item.id=id){
+      item.value=value;
+    }
+    return item;
+  });
+  localStorage.setItem("list",JSON.stringify(items));
+}
+function removeFromLocalStorage(id){
+  let items=getLocalStorage();
+  items=items.filter((item)=>{
+    if(item.id!=id){
+      return item;
+    }
+  });
+  localStorage.setItem("list",JSON,stringify(items));
+}
+// ********** SETUP ITEMS **********
+function setupItems(){
+  let items=getLocalStorage();
+  if(items.length>0){
+    items.forEach((item)=>{
+    setupItems(item.id,item.value);
+    });
+  }
+}
+function setupItem(id,value){
+  const element=document.createElement("article");
+  let attr=document.createAttribute("data-id");
+  attr.value=id;
+  element.setAttributeNode(attr);
+  element.classList.add("todo-item");
+  element.innerHTML=`
+  <p class="title">${value}</p>
+  <div class="btn-container">
+    <button type="button" class="edit-btn">
+      <i class="fas fa-edit"></i>
+    </button>
+    <button type="button" class="delete-btn">
+      <i class="fas fa-trash"></i>
+    </button>
+  </div>
+  `;
+  // adding event listeners to edit and delete buttons
+  const deleteBtn=element.querySelector(".delete-btn");
+  deleteBtn.addEventListener("click",deleteItem);
+  const editBtn=element.querySelector(".edit-btn");
+  editBtn.addEventListener("click",editItem);
+  // adding task to the list 
+  list.appendChild(element);
+  container.classList.add("show-container");
+}
