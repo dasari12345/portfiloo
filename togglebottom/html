@@ -1,0 +1,41 @@
+<div class="buttons">
+
+        <button class="buttons__toggle">
+            <i class="fa fa-share-alt">
+            </i>
+        </button>
+          
+          <div class="buttons__ctas">
+            <a class="buttons__cta" href="#">
+            <i class="fa-brands fa-facebook-f">
+            </i>Facebook</a>
+            <a class="buttons__cta" href="#">
+            <i class="fa-brands fa-twitter">
+            </i>Twitter</a>
+            <a class="buttons__cta" href="#">
+            <i class="fa-brands fa-instagram">
+            </i>Instagram</a>
+            <a class="buttons__cta" href="#">
+            <i class="fa-brands fa-youtube">
+            </i>YouTube</a>
+
+            <a class="buttons__cta" href="#">
+              <i class="fa-brands fa-tiktok">
+              </i>Tiktok</a>
+
+              <a class="buttons__cta" href="#">
+                <i class="fa-brands fa-linkedin">
+                </i>Linkedin</a>
+          </div>
+
+    </div>
+
+        <a id="source-link" class="meta-link" href="https://t.me/NarasDasa" target="_blank">
+        <i class="fas fa-link"></i>
+        <span class="roboto-mono">Join my Telegram</span>
+    </a>
+
+    <a id="yt-link" class="meta-link" href="https://l.instagram.com/?u=https%3A%2F%2Fwww.instagram.com%2Finvites%2Fcontact%2F%3Fi%3D13n1l01dec0c8%26utm_content%3D3pl8f9u&e=AT0TzUbCkZXEzOp_ZsR6DjvD8m7wx4U7nAZmmq4KBNNQt84gtK252KH93OPcyUTfUIsmDjx5Xe2y-_iVG2EX6n06gYg0Dcy77wyHI0kzJ-EjHvXVUR2Nkg" target="_blank">
+        <i class="fab fa-instagram"></i>
+        <span>Follow me..❤</span>
+    </a>
